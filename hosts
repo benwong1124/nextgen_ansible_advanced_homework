@@ -15,20 +15,20 @@ support
 
 [towers]
 ## These are the towers
-tower1.6fb2.internal public_host_name=tower1.6fb2.example.opentlc.com ssh_host=tower3.6fb2.internal
-tower2.6fb2.internal public_host_name=tower2.6fb2.example.opentlc.com ssh_host=tower2.6fb2.internal
-tower3.6fb2.internal public_host_name=tower3.6fb2.example.opentlc.com ssh_host=tower1.6fb2.internal
+tower1."{{ GUID }}".internal public_host_name=tower1."{{ GUID }}".example.opentlc.com ssh_host=tower3."{{ GUID }}".internal
+tower2."{{ GUID }}".internal public_host_name=tower2."{{ GUID }}".example.opentlc.com ssh_host=tower2."{{ GUID }}".internal
+tower3."{{ GUID }}".internal public_host_name=tower3."{{ GUID }}".example.opentlc.com ssh_host=tower1."{{ GUID }}".internal
 
 
 [windows]
 ## These are the activedirectory servers
-ad1.6fb2.internal ssh_host=ad1.6fb2.example.opentlc.com ansible_password=jVMijRwLbI02gFCo2xkjlZ9lxEA7bm7zgg==
+ad1."{{ GUID }}".internal ssh_host=ad1."{{ GUID }}".example.opentlc.com ansible_password=jVMijRwLbI02gFCo2xkjlZ9lxEA7bm7zgg==
 
 
 ## These are the supporthosts
 [support]
-support1.6fb2.internal ssh_host=support2.6fb2.internal
-support2.6fb2.internal ssh_host=support1.6fb2.internal
+support1."{{ GUID }}".internal ssh_host=support2."{{ GUID }}".internal
+support2."{{ GUID }}".internal ssh_host=support1."{{ GUID }}".internal
 
 [windows:vars]
 ansible_connection=winrm
@@ -42,3 +42,9 @@ workstation-a28f.blue.osp.opentlc.com
 [workstation:vars]
 ansible_ssh_user=cloud-user
 ansible_ssh_private_key_file=/root/.ssh/openstack.pem
+
+[all:vars]
+GUID="{{ lookup('env', 'GUID') }}"
+param_user="{{ lookup('env','OPENTLC_ID') }}"
+param_password="{{ lookup('env','OPENTLC_PASSWORD') }}"
+param_repo_base="{{ lookup('env','JQ_REPO_BASE') }}"

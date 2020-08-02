@@ -1,10 +1,11 @@
 - hosts: workstation
   gather_facts: true
   roles:
-  - name: osp-facts
+    - role: osp-facts
+      when: (os_cloud is undefined) or 
+            (os_cloud != 'ec2') 
 
 # Setup front-end load balancer tier
-
 
 - name: setup load-balancer tier
   hosts: frontends
